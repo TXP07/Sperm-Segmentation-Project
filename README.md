@@ -1,7 +1,7 @@
 # Sperm-Segmentation-Project
 
 ## Quick Tour<br>
-This is a pytorch implementation for our MICCAI-2023 paper "A Multi-Task Method for Immunofixation Electrophoresis Image Classification".<br>
+This is a pytorch implementation for our MICCAI-2024 paper "A Multi-Task Method for Immunofixation Electrophoresis Image Classification".<br>
 To run the code To run the code, please make sure you have prepared your data following the same structure as follows (you can also refer to the examplar data in this repository):<br>
 If you wish to utilize any of their notebooks or data, you can easily copy the required files from [segment-anything](https://github.com/facebookresearch/segment-anything) to your local copy of this repository.<br>
 ## Project Structure<br>
