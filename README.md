@@ -42,8 +42,10 @@ Here's how the data is organized:<br>
 - 'Preprocessing_images' contains preprocessing images and they will be given automatically by the code and it will be empty before running.<br>
 
 
+
 You can add data to it yourself, and the resolution of the image specification is 720*540. Or you can directly use the sample data we provide.<br>
 Example of how images and masks looked like in my dataset:<br>
+
 ## Getting Started<br>
 Follow these steps to set up and start working with the project:<br>
 
