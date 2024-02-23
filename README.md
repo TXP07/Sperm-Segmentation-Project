@@ -22,7 +22,8 @@ Sperm-Segmentation-Project/
         - Preprocessing_images      # Preprocessing images
 
 ```
-## Data Organization<br>
+## Methodology:<br>
+## Data Organization:<br>
 To structure your data for training and testing, it is recommended to organize your dataset as follows:<br>
 ```
 - data/                 # Directory for storing your dataset
