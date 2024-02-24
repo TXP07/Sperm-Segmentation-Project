@@ -16,7 +16,6 @@ Sperm-Segmentation-Project/
         - sam_vit_l_0b3195.pth
     - README.md             # This file
     - requirements.txt      # Lists the required Python packages
-    - train.py              # Main script for model training
     - data/                 # Directory for storing your dataset
         - original_images     # Original images
         - Preprocessing_images      # Preprocessing images
