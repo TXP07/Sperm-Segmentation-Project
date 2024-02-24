@@ -8,7 +8,6 @@ If you wish to utilize any of their notebooks or data, you can easily copy the r
 Here is an overview of the project's directory structure:<br>
 ```
 Sperm-Segmentation-Project/
-    - Sperm.ipynb                 # Main script for model training
     - Sperm.py            # Main script for model training
     - segment-anything-main/       #SAM model
         - sam_vit_b_01ec64.pth 
