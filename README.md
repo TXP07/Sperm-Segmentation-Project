@@ -65,6 +65,7 @@ pip install opencv-python pycocotools matplotlib onnxruntime onnx
 3. **Run the code**： Please use jupyter notebook to open the .ipynb file and run it, or use software such as pycharm to run the .py file.Choose the serial number of image you like and modify it in the code.And you can run the code now.<br>
 ## Example Result:<br>
 ## References：<br>
+- [segment-anything](https://github.com/facebookresearch/segment-anything) [1]
 
 
 
