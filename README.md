@@ -22,7 +22,7 @@ Sperm-Segmentation-Project/
 ```
 ## Methodology:<br>
 ## Data Organization:<br>
-Our data contains about 200 sperm pictures, and the resolution of each picture is 720*540. <br>
+Our data contains about 4 sperm pictures, and the resolution of each picture is 720*540. <br>
 These data sets come from the hospitals we work with. Each image contains several intact sperm, and they often overlap.<br>
 To structure your data for training and testing, it is recommended to organize your dataset as follows:<br>
 ```
