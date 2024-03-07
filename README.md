@@ -69,6 +69,10 @@ python Sperm.py
 ```
 
 ## Example Result:<br>
+<div align="center">
+    <img src="Example Result/0108.jpg" alt="drawing" width="300"/>
+</div>
+
 ## References：<br>
 - [segment-anything](https://github.com/facebookresearch/segment-anything) [1]
 
