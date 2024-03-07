@@ -63,11 +63,11 @@ pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
 cd Sperm-Segmentation-Project
 ```
-<br>
 Run the program by command:<br>
 ```
 python Sperm.py
 ```
+
 ## Example Result:<br>
 ## References：<br>
 - [segment-anything](https://github.com/facebookresearch/segment-anything) [1]
