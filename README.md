@@ -10,9 +10,7 @@ Here is an overview of the project's directory structure:<br>
 Sperm-Segmentation-Project/
     - Sperm.py            # Main script for model training
     - segment-anything-main/       #SAM model
-        - sam_vit_b_01ec64.pth 
-        - sam_vit_h_4b8939.pth
-        - sam_vit_l_0b3195.pth
+        - sam_vit_b_01ec64.pth
     - README.md             # This file
     - requirements.txt      # Lists the required Python packages
     - data/                 # Directory for storing your dataset
@@ -61,7 +59,15 @@ cd segment-anything; pip install -e .
 ```
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
-3. **Run the code**： Please use jupyter notebook to open the .ipynb file and run it, or use software such as pycharm to run the .py file.Choose the serial number of image you like and modify it in the code.And you can run the code now.<br>
+3. **Run the code**： Enter the directory：<br>
+```
+cd Sperm-Segmentation-Project
+```
+<br>
+Run the program by command:<br>
+```
+python Sperm.py
+```
 ## Example Result:<br>
 ## References：<br>
 - [segment-anything](https://github.com/facebookresearch/segment-anything) [1]
