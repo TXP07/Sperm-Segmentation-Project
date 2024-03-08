@@ -61,6 +61,10 @@ pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
 Please download the SAM model and the weight file to the path in the folder segment-anything-main.If it is not achieved，you must modify the pathas following.<br>
 4. **Check the path of sam**:Replace the paths of the SAM model and weight file in the code with the path you actually installed.<br>
+<div align="center">
+    <img src="Example Result/code.png" alt="drawing" width="500"/>
+</div>
+
 3. **Run the code**： Enter the directory：<br>
 ```
 cd Sperm-Segmentation-Project
