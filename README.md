@@ -35,7 +35,7 @@ To structure your data for training and testing, it is recommended to organize y
 Here's how the data is organized:<br>
 
 - 'original_images' contains original images you want to process.
-- 'Preprocessing_images' contains preprocessing images and they will be given automatically by the code and it will be empty before running.<br>
+- 'Preprocessing_images' contains preprocessing images.<br>
 
 
 
@@ -65,7 +65,7 @@ Please download the SAM model and the weight file to the path in the folder segm
     <img src="Example Result/code.png" alt="drawing" width="500"/>
 </div>
 
-3. **Run the code**： Enter the directory：<br>
+5. **Run the code**： Enter the directory：<br>
 ```
 cd Sperm-Segmentation-Project
 ```
