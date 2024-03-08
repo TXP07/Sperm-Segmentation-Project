@@ -2,7 +2,7 @@
 
 ## Quick Tour:<br>
 This is a pytorch implementation for our MICCAI-2024 paper "CS3: Cascade SAM for Sperm Segmentation".<br>
-To run the code, please make sure you have prepared your data following the same structure as follows (you can also refer to the examplar data in this repository):<br>
+To run the code, please make sure you have prepared your data following the same structure as follows (you can also refer to the examplar data in this repository).<br>
 
 ## Project Structure<br>
 Here is an overview of the project's directory structure:<br>
