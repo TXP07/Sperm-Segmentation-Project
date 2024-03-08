@@ -21,7 +21,7 @@ Sperm-Segmentation-Project/
 ## Methodology:<br>
 
 <div align="center">
-    <img src="Example Result/methods2.pdf" alt="drawing" width="500"/>
+    <img src="Example Result/method2.png" alt="drawing" width="600"/>
 </div>
 
 ## Data Organization:<br>
