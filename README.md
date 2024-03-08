@@ -64,7 +64,7 @@ cd segment-anything-main; pip install -e .
 ```
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
-Please download the SAM model and the weight file to the path in the folder segment-anything-main. If it is not achieved，please modify the paths following.<br>
+Please download SAM model and the weight file to the path in the folder segment-anything-main. If it is not achieved，please modify the paths following.<br>
 4. **Check the path of sam**:Replace the paths of the SAM model and weight file in the code with the path you actually installed to.<br>
 <div align="center">
     <img src="Example Result/code.png" alt="drawing" width="500"/>
@@ -80,7 +80,7 @@ python Sperm.py
 ```
 
 ## Example Result:<br>
-After running the code, we will obtain the json file of the segmentation result. Here are examples of what our visualization looks like.<br>
+After running the code, we will obtain the json file of the segmentation result in the folder ```-original_images``` . Here are examples of what our visualization looks like.<br>
 <div align="center">
     <img src="Example Result/1191.jpg" alt="drawing" width="300"/>
     <img src="Example Result/0850.jpg" alt="drawing" width="300"/>
