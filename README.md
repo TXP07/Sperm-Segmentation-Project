@@ -3,7 +3,7 @@
 ## Quick Tour:<br>
 This is a pytorch implementation for our MICCAI-2024 paper "CS3: Cascade SAM for Sperm Segmentation".<br>
 To run the code, please make sure you have prepared your data following the same structure as follows (you can also refer to the examplar data in this repository):<br>
-If you wish to utilize any of their notebooks or data, you can easily copy the required files from [segment-anything](https://github.com/facebookresearch/segment-anything) to your local copy of this repository.<br>
+
 ## Project Structure<br>
 Here is an overview of the project's directory structure:<br>
 ```
@@ -80,7 +80,7 @@ python Sperm.py
 ```
 
 ## Example Result:<br>
-After you run the code, you will obtain the json file of the segmentation result. Here are examples of what our visualization looks like.<br>
+After running the code, we will obtain the json file of the segmentation result. Here are examples of what our visualization looks like.<br>
 <div align="center">
     <img src="Example Result/1191.jpg" alt="drawing" width="300"/>
     <img src="Example Result/0850.jpg" alt="drawing" width="300"/>
