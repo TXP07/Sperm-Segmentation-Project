@@ -78,10 +78,10 @@ def resize_image(input_path, output_path, width, height):
         print(f"File {input_path} does not exist.")
 
 # Set your parameters here
-input_path = f"data/Preprocessing_images/{I}.jpg"  # Path to the input image"E:\cs3\Sperm-Segmentation-Project-main\data\original_images"
-output_path = "data/original_images/new.jpg" # Path to save the resized image
-width = 1440         # New width for the image
-height = 1080        # New height for the image
+input_path = f"data/Preprocessing_images/{I}.jpg"  
+output_path = "data/original_images/new.jpg" 
+width = 1440         
+height = 1080       
 
 # Call the resizing function
 resize_image(input_path, output_path, width, height)
@@ -119,14 +119,13 @@ def adjust_brightness(image_path, target_brightness):
         return adjusted_hsv_image.convert('RGB')
 
 
-image_path = 'data/original_images/new.jpg' # 请替换为你的图片文件路径
-# Adjust the brightness of the single image
+image_path = 'data/original_images/new.jpg' 
+
 adjusted_image = adjust_brightness(image_path, target_brightness)
 
-# Save the adjusted image
-# You can choose to save it with the same name (overwriting) or with a new name
+
 new_path='data/original_images/new1.jpg'
-adjusted_image.save(new_path) # 或者使用新的文件名保存
+adjusted_image.save(new_path) 
 #print("Brightness adjustment completed for the image.")
 
 
@@ -163,15 +162,15 @@ def adjust_rgb_channels(image_path, target_r, target_g, target_b):
         adjusted_image = Image.merge('RGB', (Image.fromarray(r), Image.fromarray(g), Image.fromarray(b)))
         return adjusted_image
 
-# 单一文件路径
-image_path = 'data/original_images/new1.jpg' # 请替换为你的图片文件路径
+
+image_path = 'data/original_images/new1.jpg' 
 
 # Adjust the RGB channels of the single image
 adjusted_image = adjust_rgb_channels(image_path, target_r, target_g, target_b)
 new_path = 'data/original_images/new2.jpg'
 # Save the adjusted image
 # You can choose to save it with the same name (overwriting) or with a new name
-adjusted_image.save(new_path) # 或者使用新的文件名保存
+adjusted_image.save(new_path) 
 #print("RGB channel adjustment completed for the image.")
 
 
@@ -181,7 +180,7 @@ import cv2
 import numpy as np
 from skimage import color, filters, morphology
 
-# 去除图像中的雾霾
+
 def dehaze_image(img, clip_limit=150, tile_size=(2, 2)):
     lab = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
     l, a, b = cv2.split(lab)
@@ -190,17 +189,17 @@ def dehaze_image(img, clip_limit=150, tile_size=(2, 2)):
     lab_clahe = cv2.merge((l_clahe, a, b))
     return cv2.cvtColor(lab_clahe, cv2.COLOR_LAB2RGB)
 
-# 锐化图像
+
 def sharpen_image(img, factor=1.235):
     kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
     return cv2.filter2D(img, -1, kernel * factor)
 
-# 调整图像对比度
+
 def adjust_contrast(img, factor=1.0):
     mean = np.mean(img)
     return np.clip((1 + factor) * (img - mean) + mean, 0, 255).astype(np.uint8)
 
-# 使用 skimage 处理图像
+
 def process_image_skimage(image_opencv):
     image_rgb = cv2.cvtColor(image_opencv, cv2.COLOR_BGR2RGB)
     gray_sk = color.rgb2gray(image_rgb)
@@ -213,11 +212,11 @@ def process_image_skimage(image_opencv):
     image_rgb[whitening_mask_sk] = [255, 255, 255]
     return cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
 
-# 处理单一图像
+
 def process_single_image(image_path,news_path):
     image_opencv = cv2.imread(image_path)
     if image_opencv is None:
-        print("无法读取图像")
+        print("can't load image")
         return
 
     img_original_rgb = cv2.cvtColor(image_opencv, cv2.COLOR_BGR2RGB)
@@ -228,14 +227,14 @@ def process_single_image(image_path,news_path):
     img_noise_reduced = cv2.fastNlMeansDenoisingColored(img_new_adjustment, None, 20, 20, 7, 21)
     img_final = process_image_skimage(img_noise_reduced)
 
-    # 保存处理后的图像，可以选择覆盖原文件或保存为新文件
-    cv2.imwrite(news_path, img_final)  # 或者使用新的文件名来保存
-    #print("图像处理并保存完成")
+    
+    cv2.imwrite(news_path, img_final)  
 
-# 指定单一图像路径
-image_path = 'data/original_images/new2.jpg'  # 替换为你的图片路径E:\cs3\Sperm-Segmentation-Project-main\data\Preprocessing_images
+
+
+image_path = 'data/original_images/new2.jpg'  
 news_path = f'data/Preprocessing_images/new2.jpg'
-# 调用处理函数
+
 process_single_image(image_path,news_path)
 
 
@@ -317,7 +316,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 
 
-# 模型路径位于根目录
+
 sam_checkpoint = "segment-anything-main/sam_vit_h_4b8939.pth"
 model_type = "default"
 device = "cuda"
@@ -330,7 +329,7 @@ sam.to(device=device)
 
 
 
-# 使用SAM进行预分割
+
 mask_generator = SamAutomaticMaskGenerator(sam)
 masks = mask_generator.generate(image)
 masks = np.array([mask for mask in masks if mask['area'] <= 100000])
@@ -405,15 +404,15 @@ np.save('valid_masks.npy', np.array(valid_masks))
 from PIL import Image
 import numpy as np
 
-# 载入图片
+
 image_path = f'data/Preprocessing_images/{I}.jpg'
 image = Image.open(image_path)
 
-# 载入掩码数组
+
 masks_path = 'valid_masks.npy'
 masks = np.load(masks_path)
 
-# 查看图片和掩码的基本信息
+
 image_info = (image.size, image.mode)
 masks_info = masks.shape
 
@@ -423,15 +422,15 @@ masks_info = masks.shape
 
 
 
-# 将图片转换为 NumPy 数组以便操作
+
 image_np = np.array(image)
 
-# 遍历每个掩码
+
 for mask in masks:
-    # 将对应掩码的像素位置修改为白色 (255, 255, 255)
+  
     image_np[mask == True] = [255, 255, 255]
 
-# 将修改后的 NumPy 数组转换回图片
+
 modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image.jpg"
 modified_image.save("modified_image.jpg")
@@ -445,33 +444,32 @@ from skimage import morphology, color, filters, io
 import cv2
 import os
 
-# 读取图像
+
 image_sk = io.imread("modified_image.jpg")
 
-# 将图像转换为灰度
 gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
 cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
+
 image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
 
 
-# 显示处理后的图片
+
 processed_img_path = "modified_image_dilated.jpg"
 cv2.imwrite(processed_img_path, image_sk)
 
@@ -485,7 +483,7 @@ while T!=False:
 
     image = cv2.imread('modified_image_dilated.jpg')
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    # 使用SAM进行预分割
+  
     mask_generator = SamAutomaticMaskGenerator(sam)
     masks = mask_generator.generate(image)
     masks = np.array([mask for mask in masks if mask['area'] <= 100000])
@@ -548,62 +546,62 @@ while T!=False:
     from PIL import Image
     import numpy as np
 
-    # 载入图片
+    
     image_path = 'modified_image_dilated.jpg'
     image = Image.open(image_path)
 
-    # 载入掩码数组
+    
     masks_path = 'valid_masks.npy'
     masks = np.load(masks_path)
 
-    # 将图片转换为 NumPy 数组以便操作
+    
     image_np = np.array(image)
 
-        # 遍历每个掩码
+        
     for mask in masks:
-        # 将对应掩码的像素位置修改为白色 (255, 255, 255)
+       
         image_np[mask == True] = [255, 255, 255]
 
-    # 将修改后的 NumPy 数组转换回图片
+    
     modified_image = Image.fromarray(image_np)   
     processed_img_path = "modified_image.jpg"
        
    
     modified_image.save("modified_image.jpg")
    
-    # 展示修改后的图片
+   
     #modified_image
     from skimage import morphology, color, filters, io
     import cv2
     import os
 
-# 读取图像
+
     image_sk = io.imread("modified_image.jpg")
 
-# 将图像转换为灰度
+
     gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
     threshold_value = filters.threshold_otsu(gray_sk)
     binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
     cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
     mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
+
     image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
     whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
     image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
 
 
-# 显示处理后的图片
+
     processed_img_path = "modified_image_dilated.jpg"
     cv2.imwrite(processed_img_path, image_sk)
     
@@ -611,24 +609,24 @@ while T!=False:
 image = cv2.imread('modified_image_dilated.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# 使用SAM进行预分割
+
 mask_generator = SamAutomaticMaskGenerator(sam)
 masks = mask_generator.generate(image)
 masks = np.array([mask for mask in masks if mask['area'] <= 100000])
 #masks = np.delete(masks, 0)
 np.save('masks2.npy', masks)
 
-# 将SAM识别结果掩码进行数字化处理，转存到mask1中
+
 masks1 = [np.array(seg['segmentation'], dtype=np.uint8) for seg in masks]
 
 masks1 = np.stack(masks1)
 
-# 1.2 使用颜色范围进行识别并生成 mask
-image_path = f'data/original_images/{I}.jpg' # 根据您的文件路径进行调整
+
+image_path = f'data/original_images/{I}.jpg' 
 image = cv2.imread(image_path)
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-lower_color = np.array([100, 20 , 20])  # 紫色的较低范围
-upper_color = np.array([180, 255, 255])  # 紫色的较高范围
+lower_color = np.array([100, 20 , 20])  
+upper_color = np.array([180, 255, 255]) 
 mask = cv2.inRange(hsv, lower_color, upper_color)
 
 filtered_masks = []
@@ -645,7 +643,7 @@ for current_mask in masks1:
     min_row, max_row = np.min(rows), np.max(rows)
     min_col, max_col = np.min(cols), np.max(cols)
     
-    # ... (rest of your code)
+    
 
     
     region_mask = mask[min_row:max_row+1, min_col:max_col+1]
@@ -655,7 +653,7 @@ for current_mask in masks1:
     total_pixels = np.sum(region_current_mask == 1)
     overlap_percentage = (overlap / total_pixels) * 100
     
-# 置信参数，建议范围为(50,80)，值越高筛选越严格，容易漏选
+
     if overlap_percentage > 40:
         filtered_masks.append(current_mask)
         
@@ -707,36 +705,36 @@ np.save(file_path, masks_filtered)
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 加载 NumPy 数组文件
-file_path = 'filtered_masks.npy'  # 替换为您的文件路径
+
+file_path = 'filtered_masks.npy'  
 masks = np.load(file_path)
 
 
 from PIL import Image
 import numpy as np
 
-# 载入图片
+
 image_path = 'modified_image.jpg'
 image = Image.open(image_path)
 
-# 载入掩码数组
+
 masks_path = 'filtered_masks.npy'
 masks = np.load(masks_path)
 
-# 查看图片和掩码的基本信息
+
 image_info = (image.size, image.mode)
 masks_info = masks.shape
 
 
-# 将图片转换为 NumPy 数组以便操作
+
 image_np = np.array(image)
 
-# 遍历每个掩码
+
 for mask in masks:
-    # 将对应掩码的像素位置修改为白色 (255, 255, 255)
+    
     image_np[mask == 1] = [255, 255, 255]
 
-# 将修改后的 NumPy 数组转换回图片
+
 modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image.jpg"
 modified_image.save("modified_image.jpg")
@@ -747,26 +745,26 @@ from skimage import morphology, color, filters, io
 import cv2
 import os
 
-# 读取图像
+
 image_sk = io.imread("modified_image.jpg")
 
-# 将图像转换为灰度
+
 gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
 cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
+
 image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
@@ -784,7 +782,7 @@ cv2.imwrite(processed_img_path, image_sk)
 image22 = cv2.imread(r"modified_image_dilated.jpg")
 image22 = cv2.cvtColor(image22, cv2.COLOR_BGR2RGB)
 
-# 使用SAM进行预分割
+
 mask_generator22 = SamAutomaticMaskGenerator(sam)
 masks22 = mask_generator22.generate(image22)
 masks22 = np.array([mask for mask in masks22 if mask['area'] <= 100000])
@@ -797,11 +795,11 @@ np.save("masks22.npy",masks22)
 masks1 = [np.array(seg['segmentation'], dtype=np.uint8) for seg in masks22]
 
 masks1 = np.stack(masks1)
-image_path = f'data/original_images/{I}.jpg'  # 根据您的文件路径进行调整
+image_path = f'data/original_images/{I}.jpg'  
 image = cv2.imread(image_path)
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-lower_color = np.array([100, 33, 20])  # 紫色的较低范围
-upper_color = np.array([180, 255, 255])  # 紫色的较高范围
+lower_color = np.array([100, 33, 20])  
+upper_color = np.array([180, 255, 255]) 
 mask = cv2.inRange(hsv, lower_color, upper_color)
 filtered_masks = list(np.load("filtered_masks.npy"))
 
@@ -827,7 +825,7 @@ for current_mask in masks1:
     total_pixels = np.sum(region_current_mask == 1)
     overlap_percentage = (overlap / total_pixels) * 100
 
-    # 置信参数，建议范围为(50,80)，值越高筛选越严格，容易漏选
+   
     if overlap_percentage > 50:
         new.append(current_mask)
 
@@ -853,12 +851,12 @@ image = Image.open(image_path)
 
 image_np = np.array(image)
 
-# 遍历每个掩码
+
 for mask in masks_filtered:
-    # 将对应掩码的像素位置修改为白色 (255, 255, 255)
+
     image_np[mask == 1] = [255, 255, 255]
 
-# 将修改后的 NumPy 数组转换回图片
+
 modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image_dilated.jpg"
 modified_image.save("modified_image_dilated.jpg")
@@ -867,30 +865,30 @@ modified_image.save("modified_image_dilated.jpg")
 
 image_sk = io.imread("modified_image_dilated.jpg")
 
-# 将图像转换为灰度
+
 gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
 cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
+
 image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
 
 
-# 显示处理后的图片
+
 processed_img_path = "modified_image_dilated.jpg"
 cv2.imwrite(processed_img_path, image_sk)
 
@@ -902,7 +900,7 @@ cv2.imwrite(processed_img_path, image_sk)
 image22 = cv2.imread(r"modified_image_dilated.jpg")
 image22 = cv2.cvtColor(image22, cv2.COLOR_BGR2RGB)
 
-# 使用SAM进行预分割
+
 mask_generator22 = SamAutomaticMaskGenerator(sam)
 masks22 = mask_generator22.generate(image22)
 masks22 = np.array([mask for mask in masks22 if mask['area'] <= 100000])
@@ -956,60 +954,60 @@ for index, binary_mask in enumerate(binary_masks):
         valid_mask_indices.append(index)
 
 
-# 加载掩码文件
+
 masks22_path = 'masks22.npy'
 masks22 = np.load(masks22_path, allow_pickle=True)
 
-# 加载图像文件
+
 image_path = r"modified_image_dilated.jpg"
 image = Image.open(image_path)
 
-# 转换图像为 NumPy 数组
+
 image_np = np.array(image)
 
 
-# 遍历 valid_mask_indices 并将对应掩码层的像素点改为白色
+
 for idx in valid_mask_indices:
-    # 获取掩码的布尔数组
+    
     mask = masks22[idx]['segmentation']
-    # 将图像上对应掩码的像素点设置为白色 (255, 255, 255)
+   
     image_np[mask] = [255, 255, 255]
 
-# 将修改后的图像转换回 PIL 图像
+
 modified_image = Image.fromarray(image_np)
 
-# 存储修改后的图像
+
 save_path = 'new_modified_image.jpg'
 modified_image.save(save_path)
 
 
-# 读取图像
+
 image_sk = io.imread('new_modified_image.jpg')
 
-# 将图像转换为灰度
+
 gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
 cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
+
 image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
 
 
-# 显示处理后的图片
+
 processed_img_path = 'processed_image.jpg'
 cv2.imwrite(processed_img_path, image_sk)
 
@@ -1024,7 +1022,7 @@ np.save("masks22.npy",masks22)
 
 
 
-#
+
 
 
 
@@ -1179,7 +1177,7 @@ output_file = 'skeletonized_segmentations.npy'  # Replace with your desired save
 np.save(output_file, skeletonized_segmentations)
 
 
-#判断连通分量，输出不连通的掩码索引
+
 
 
 # Function to analyze the connectivity of the skeletons in all masks
@@ -1236,8 +1234,7 @@ def analyze_skeleton_connectivity(masks):
             disconnected_masks_indices.append(index)
 
     return disconnected_masks_indices
-# 设置端点来判断是否是单线条，如果有两个以上端点则说明有分支，其中为防止骨架化的误差，
-# 分支点到端点的距离即边长需超过阈值25像素，对超出的点进行标注，不超过的每个只能算0.5，并且返回索引值
+
 
 
 
@@ -1317,9 +1314,6 @@ valid_endpoints_masks_indices = identify_valid_endpoints_masks(skeletonized_segm
 
 
 def find_point_on_skeleton(skeleton, start, distance):
-    """
-    在骨架上从给定起点沿任意方向移动固定距离，并返回新的点位置。
-    """
     current_point = start
     visited = set()
     height, width = skeleton.shape
@@ -1333,7 +1327,7 @@ def find_point_on_skeleton(skeleton, start, distance):
                      x2, y2) not in visited]
 
         if not neighbors:
-            break  # 如果找不到邻居，停止移动
+            break  
 
         # Choose the next point
         current_point = neighbors[0] if distance > 0 else neighbors[-1]
@@ -1440,28 +1434,28 @@ for index, skeleton_layer in enumerate(skeletonized_segmentations):
         masks_with_high_curvature_points.append(index)
     sharp_points_all_layers.append({'layer': index, 'sharp_points': sharp_points})
 
-# 合并三个数组并去除重复元素
+
 final_set = set(masks_with_high_curvature_points) | set(valid_endpoints_masks_indices) | set(disconnected_masks_indices)
 final = list(final_set)
-image = io.imread('processed_image.jpg')  # 请替换为您的图片路径
-masks = np.load('masks22.npy', allow_pickle=True)  # 请替换为您的掩码文件路径
+image = io.imread('processed_image.jpg')  
+masks = np.load('masks22.npy', allow_pickle=True)  
 
-# 创建原图的副本
+
 new_image = copy.deepcopy(image)
 
-# Final 索引
 
 
-masks_length = len(masks)  # 获取 masks 的长度，即 24
-new_list = list(range(masks_length))  # 创建一个从 0 到 23 的列表
+
+masks_length = len(masks)  
+new_list = list(range(masks_length))  
 
 final2 = list(set(new_list) - set(final))
 
 
-# 在掩码位置修改新图片
+
 for index in final2:
     mask = masks[index]['segmentation']
-    new_image[mask == 1] = 255  # 将掩码位置设置为白色
+    new_image[mask == 1] = 255  
 
     
     
@@ -1563,54 +1557,53 @@ masks = np.load(masks_file, allow_pickle=True)
 for index in final2:
     Sperm_tail.append(masks[index])
 
-# 保存并展示修改后的新图片
-new_image_path = 'final111.jpg'  # 请替换为您希望保存的新图片路径
+
+new_image_path = 'final111.jpg'  
 io.imsave(new_image_path, new_image)
 
-# 读取图像
+
 image_sk = io.imread('final111.jpg')
 
-# 将图像转换为灰度
+
 gray_sk = color.rgb2gray(image_sk)
 
-# 使用Otsu's方法进行二值化
+
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-# 使用morphology.remove_small_objects去除小的颗粒
+
 cleaned = morphology.remove_small_objects(binary, min_size=50)
 
-# 创建一个mask，用于将小的颗粒转换为白色
+
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-# 使用mask将小的颗粒转换为白色
 image_sk[mask] = [255, 255, 255]
 
-# 将接近白色的背景变成纯白色
+
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
 
 
-# 显示处理后的图片
+
 processed_img_path = 'modified_image_dilated0.jpg'
 cv2.imwrite(processed_img_path, image_sk)
 
 
 
-# 初始化用于跟踪Sperm_tail数量的变量
+
 prev_count = -1
 current_count = 0
-stagnant_rounds = 0  # 连续不变的轮数
+stagnant_rounds = 0  
 
-X = 0  # 初始化迭代变量
+X = 0  
 while True:
-    # 读取图片
+    
     image22 = cv2.imread(f"modified_image_dilated{X}.jpg")
     image22 = cv2.cvtColor(image22, cv2.COLOR_BGR2RGB)
 
-    # 使用SAM进行预分割
+  
     mask_generator22 = SamAutomaticMaskGenerator(sam)
     masks22 = mask_generator22.generate(image22)
     masks22 = np.array([mask for mask in masks22 if mask['area'] <= 100000])
@@ -1650,54 +1643,53 @@ while True:
     masks22_path = 'masks22.npy'
     masks22 = np.load(masks22_path, allow_pickle=True)
 
-    # 加载图像文件
+    
     image_path = f"modified_image_dilated{X}.jpg"
     image = Image.open(image_path)
 
-    # 转换图像为 NumPy 数组
+    
     image_np = np.array(image)
 
-    # 遍历 valid_mask_indices 并将对应掩码层的像素点改为白色
+   
     for idx in valid_mask_indices:
-        # 获取掩码的布尔数组
+        
         mask = masks22[idx]['segmentation']
-        # 将图像上对应掩码的像素点设置为白色 (255, 255, 255)
+        
         image_np[mask] = [255, 255, 255]
 
-    # 将修改后的图像转换回 PIL 图像
+    
     modified_image = Image.fromarray(image_np)
 
-    # 存储修改后的图像
+    
     save_path = 'new_modified_image.jpg'
     modified_image.save(save_path)
-    # 由于我们不能直接访问文件系统，我们将直接处理上传的图片
+   
 
 
 
-    # 读取图像
+
     image_sk = io.imread('new_modified_image.jpg')
 
-    # 将图像转换为灰度
+
     gray_sk = color.rgb2gray(image_sk)
 
-    # 使用Otsu's方法进行二值化
+
     threshold_value = filters.threshold_otsu(gray_sk)
     binary = gray_sk < threshold_value
 
-    # 使用morphology.remove_small_objects去除小的颗粒
+ 
     cleaned = morphology.remove_small_objects(binary, min_size=20)
 
-    # 创建一个mask，用于将小的颗粒转换为白色
+
     mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-    # 使用mask将小的颗粒转换为白色
+
     image_sk[mask] = [255, 255, 255]
 
-    # 将接近白色的背景变成纯白色
+
     whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
     image_sk[whitening_mask_sk] = [255, 255, 255]
 
-    # 显示处理后的图片
     processed_img_path = 'processed_image.jpg'
     cv2.imwrite(processed_img_path, image_sk)
 
@@ -1778,89 +1770,87 @@ while True:
 
 
 
-    # 合并三个数组并去除重复元素
+
     final_set = set(masks_with_high_curvature_points) | set(valid_endpoints_masks_indices) | set(disconnected_masks_indices)
     final = list(final_set)
 
-    # 加载原始图片和掩码
-    image = io.imread('processed_image.jpg')  # 请替换为您的图片路径
-    masks = np.load('masks22.npy', allow_pickle=True)  # 请替换为您的掩码文件路径
 
-    # 创建原图的副本
+    image = io.imread('processed_image.jpg') 
+    masks = np.load('masks22.npy', allow_pickle=True)  
+
+
     new_image = copy.deepcopy(image)
 
-    # Final 索引
 
-    masks_length = len(masks)  # 获取 masks 的长度，即 24
-    new_list = list(range(masks_length))  # 创建一个从 0 到 23 的列表
+    masks_length = len(masks)  
+    new_list = list(range(masks_length)) 
 
     final2 = list(set(new_list) - set(final))
 
 
 
-    # 在掩码位置修改新图片
+
     for index in final2:
         mask = masks[index]['segmentation']
-        new_image[mask == 1] = 255  # 将掩码位置设置为白色
+        new_image[mask == 1] = 255  
 
     for index in final2:
         Sperm_tail.append(masks[index])
 
-    # 保存并展示修改后的新图片
-    new_image_path = 'final111.jpg'  # 请替换为您希望保存的新图片路径
+    new_image_path = 'final111.jpg'  
     io.imsave(new_image_path, new_image)
 
-    # 展示新图片
+
 
     img_path = 'final111.jpg'
 
-    # 读取图像
+
     image_sk = io.imread('final111.jpg')
 
-    # 将图像转换为灰度
+
     gray_sk = color.rgb2gray(image_sk)
 
-    # 使用Otsu's方法进行二值化
+
     threshold_value = filters.threshold_otsu(gray_sk)
     binary = gray_sk < threshold_value
 
-    # 使用morphology.remove_small_objects去除小的颗粒
+ 
     cleaned = morphology.remove_small_objects(binary, min_size=20)
 
-    # 创建一个mask，用于将小的颗粒转换为白色
+
     mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-    # 使用mask将小的颗粒转换为白色
+
     image_sk[mask] = [255, 255, 255]
 
-    # 将接近白色的背景变成纯白色
+ 
     whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
     image_sk[whitening_mask_sk] = [255, 255, 255]
 
-    # 显示处理后的图片
+
     processed_img_path = f"modified_image_dilated{X + 1}.jpg"
     cv2.imwrite(processed_img_path, image_sk)
 
 
 
 
-    # 计算当前轮次的Sperm_tail数量
+
     current_count = len(Sperm_tail)
 
-    # 检查Sperm_tail数量是否发生变化
+
     if current_count == prev_count:
         stagnant_rounds += 1
     else:
         stagnant_rounds = 0
 
-    # 更新prev_count为当前轮次的数量
+
     prev_count = current_count
 
-    # 检查是否连续三轮数量没有变化
+
     if stagnant_rounds >= 2:
-        break  # 终止循环
+        break  
     #print("X:",X)
-    # 更新迭代变量
+
     #print("stagnant_rounds:",stagnant_rounds)
     #print("len(Sperm_tail):",len(Sperm_tail))
     X += 1
@@ -1870,40 +1860,36 @@ while True:
 
 
 def extract_segments_from_image(masks_path, image_path):
-    # 加载分割掩码
+
     masks = np.load(masks_path, allow_pickle=True)
 
-    # 加载图片
+
     image = Image.open(image_path)
     image_np = np.array(image)
 
-    # 为每个掩码创建新的白色背景图片并扣出对应像素
+
     extracted_images_paths = []
     for i, mask_dict in enumerate(masks):
-        # 获取分割掩码
+
         segmentation = mask_dict['segmentation']
 
-        # 创建一个新的白色背景图片
+
         new_image = Image.new("RGB", image.size, (255, 255, 255))
         new_image_np = np.array(new_image)
 
-        # 在新图片中扣出对应的像素
         new_image_np[segmentation == 1] = image_np[segmentation == 1]
 
-        # 将 NumPy 数组转换回 PIL 图片
         new_image_pil = Image.fromarray(new_image_np)
 
-        # 保存生成的图片
+
         new_image_path = f'extracted_image{i}_0.jpg'
         new_image_pil.save(new_image_path)
 
-        # 将路径添加到列表中以便下载
         extracted_images_paths.append(new_image_path)
 
     return extracted_images_paths
 
 
-# 调用函数
 masks_path = 'masks22.npy'
 # image_path = f'modified_image_dilated{X}.jpg'
 image_path = f'data/original_images/{I}.jpg'
@@ -2171,7 +2157,7 @@ for index, skeleton in enumerate(skeletons):
         endpoints_coordinates = np.argwhere(endpoints)
 
         if sum(is_adjacent_to_branch(tuple(endpoint), branch_points_list) for endpoint in
-               endpoints_coordinates) != 3:  # 可修改的地方，即是否需要判断两端都有分支点
+               endpoints_coordinates) != 3:  
             for coord in component_coords:
                 skeleton_without_branches[tuple(coord)] = 0
 
@@ -2251,10 +2237,10 @@ def standardize_format(sperm_tail):
     standardized_data = []
     for item in sperm_tail:
         if isinstance(item, dict):
-            # 如果item已经是字典，只需确保'segmentation'键存在
+
             standardized_item ={'segmentation': item['segmentation']}
         else:
-            # 如果item不是字典，则创建一个新字典
+
             standardized_item = {'segmentation': item}
         standardized_data.append(standardized_item)
     return standardized_data
@@ -2285,7 +2271,7 @@ filtered_masks = filter_masks(original_masks, threshold=450)
 np.save('Sperm_tail.npy', np.array(filtered_masks, dtype=object))
 
 
-#去除IOU占比大于0.5的掩码中小的部分，只留下大的
+
 # Define the IOU computation function
 def compute_iou(mask1, mask2):
     intersection = np.logical_and(mask1, mask2).sum()
@@ -2317,7 +2303,7 @@ np.save(updated_masks_path, masks)
 
 
 # Load the masks from the provided file
-masks_path = 'filtered_masks.npy'  # 修改为你的文件路径
+masks_path = 'filtered_masks.npy'  
 masks = np.load(masks_path, allow_pickle=True)
 
 # Identify pairs of masks with IOU >= 0.5 and decide which one to keep
@@ -2336,11 +2322,11 @@ for i in range(masks.shape[0]):
 filtered_masks = np.delete(masks, list(masks_to_remove), axis=0)
 
 # Save the updated masks to a new file
-updated_masks_path = 'filtered_masks.npy'  # 修改为你希望保存的文件路径
+updated_masks_path = 'filtered_masks.npy'  
 np.save(updated_masks_path, filtered_masks)
 
 
-#判断最远距离是否最短，但是同时会
+
 
 
 def calculate_max_inscribed_distance(mask):
@@ -2397,7 +2383,7 @@ data = np.delete(data, masks_to_remove, axis=0)
 np.save('Sperm_tail.npy',data)
 
 
-#将每个连通分量分开进行存储
+
 
 
 # Function to label connected components in a layer
@@ -2446,7 +2432,7 @@ updated_file_path = 'filtered_masks.npy'
 np.save(updated_file_path, new_masks)
 
 
-#去除小于400像素的头部掩码
+
 
 
 # Load the segmentation masks from the provided file
@@ -2608,7 +2594,7 @@ def find_branch_points(skeleton):
 def nearest_branch_point(endpoint, branch_points):
     y, x = np.where(branch_points)
     if len(x) == 0 or len(y) == 0:
-        # 如果没有找到分支点，返回原始端点和一个较大的距离值
+
         return endpoint, float('inf')
 
     distances = np.sqrt((x - endpoint[0])**2 + (y - endpoint[1])**2)
@@ -2668,9 +2654,7 @@ for layer_data in all_endpoints:
 
 
 def find_point_on_skeleton(skeleton, start, distance):
-    """
-    在骨架上从给定起点沿任意方向移动固定距离，并返回新的点位置。
-    """
+
     current_point = start
     visited = set()
     height, width = skeleton.shape
@@ -2684,7 +2668,7 @@ def find_point_on_skeleton(skeleton, start, distance):
                      x2, y2) not in visited]
 
         if not neighbors:
-            break  # 如果找不到邻居，停止移动
+            break  
 
         current_point = neighbors[0]
         visited.add(current_point)
@@ -2693,9 +2677,7 @@ def find_point_on_skeleton(skeleton, start, distance):
 
 
 def extend_endpoints_on_skeletons(skeletons, all_endpoints, distance):
-    """
-    对每个骨架和相应的端点集合进行处理，沿骨架向内延伸固定距离。
-    """
+
     all_endpoints_20 = []
 
     for item in all_endpoints:
@@ -2713,22 +2695,22 @@ def extend_endpoints_on_skeletons(skeletons, all_endpoints, distance):
     return all_endpoints_20
 
 
-# 使用函数
-distance = 5  # 沿骨架向内延伸的像素距离
+
+distance = 5 
 
 all_endpoints_20 = extend_endpoints_on_skeletons(skeletonized_segmentations, all_endpoints, distance)
 
 
 
 # Load the image and convert it to an RGB numpy array
-image_path = f'data/original_images/{I}.jpg'  # 确保路径和变量名正确
+image_path = f'data/original_images/{I}.jpg'  
 image = Image.open(image_path).convert('RGB')
 image_array = np.array(image)
-hsv_image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2HSV)  # 转换到HSV颜色空间
+hsv_image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2HSV)  
 
 # Function to get the value (brightness) of a point in HSV space
 def value_of_point(point, hsv_img_array):
-    return hsv_img_array[point[1], point[0], 2]  # HSV中的V分量
+    return hsv_img_array[point[1], point[0], 2]  
 
 def keep_corresponding_minimum_value_point(all_endpoints, all_endpoints_20, hsv_img_array):
     corresponding_minimum_value_points_per_layer = []
@@ -2736,11 +2718,11 @@ def keep_corresponding_minimum_value_point(all_endpoints, all_endpoints_20, hsv_
     for layer_endpoints, layer_endpoints_20 in zip(all_endpoints, all_endpoints_20):
         layer = layer_endpoints['layer']
 
-        # 只有当两个端点列表长度相等时才继续
+
         if len(layer_endpoints['endpoints']) != len(layer_endpoints_20['endpoints']):
             continue
 
-        # 选择明度（Value）最小的对应端点
+
         minimum_value_point = None
         minimum_value = float('inf')
 
@@ -2755,12 +2737,12 @@ def keep_corresponding_minimum_value_point(all_endpoints, all_endpoints_20, hsv_
 
     return corresponding_minimum_value_points_per_layer
 
-# 应用函数获取每层中明度（Value）最小的端点
+
 all_endpoints = keep_corresponding_minimum_value_point(all_endpoints, all_endpoints_20, hsv_image_array)
 
 
 def find_branch_length(skeleton, start_point, visited, max_length=50):
-    """ 计算从start_point开始的分支长度 """
+
     length = 0
     current_point = start_point
     while length < max_length:
@@ -2771,16 +2753,16 @@ def find_branch_length(skeleton, start_point, visited, max_length=50):
                      if 0 <= x2 < skeleton.shape[0] and 0 <= y2 < skeleton.shape[1] and
                      skeleton[x2, y2] and (x2, y2) != current_point and (x2, y2) not in visited]
         if not neighbors:
-            break  # 没有更多的邻居点
+            break  
 
-        current_point = neighbors[0]  # 移动到下一个邻居点
+        current_point = neighbors[0]  
         visited.add(current_point)
 
     return length
 
 
 def find_longest_branch_point(skeleton, current_point, points):
-    """ 找到具有最长分支的邻居点 """
+
     max_length = 0
     best_point = None
     visited = set(points)
@@ -2797,13 +2779,13 @@ def find_longest_branch_point(skeleton, current_point, points):
 
 
 def find_skeleton_points(skeleton, start_point, num_points=30, max_branch_length=100):
-    """ 从给定起点找到连续骨架点 """
+
     points = [start_point]
     for _ in range(num_points - 1):
         current_point = points[-1]
         next_point = find_longest_branch_point(skeleton, current_point, points)
         if next_point is None:
-            break  # 没有更多的点可选
+            break  
 
         points.append(next_point)
 
@@ -2811,30 +2793,30 @@ def find_skeleton_points(skeleton, start_point, num_points=30, max_branch_length
 
 
 def calculate_angle(points):
-    # 定义函数来计算点集合形成的线与x轴的角度
+
     points_array = np.array(points)
-    # 将点列表转换为NumPy数组
+
 
     model, _ = ransac(points_array, LineModelND, min_samples=2, residual_threshold=1, max_trials=100)
-    # 使用RANSAC算法拟合直线模型
 
-    line_origin = model.params[0]  # 直线的一个点
-    line_direction = model.params[1]  # 直线的方向向量
 
-    # 选择列表中最后一个点，并计算其在直线上的投影
+    line_origin = model.params[0]  
+    line_direction = model.params[1]  
+
+
     last_point = points_array[-1]
     projected_point = line_origin + np.dot((last_point - line_origin), line_direction) * line_direction
 
     first_point = points_array[0]
     projected_point2 = line_origin + np.dot((first_point - line_origin), line_direction) * line_direction
 
-    # 计算从投影点指向起始点的向量
+
     direction_to_start = projected_point2 - projected_point
 
-    # 计算方向向量与x轴的角度
+
     angle = math.atan2(direction_to_start[0], direction_to_start[1]) * 180 / math.pi
 
-    # 返回角度，确保其为正值
+
     return angle if angle >= 0 else angle + 360
 
 
@@ -2857,18 +2839,12 @@ for layer_info in all_endpoints:
 
 
 
-# 定义计算两点之间距离的函数
+
 def distance(point1, point2):
     return math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2)
 
 def find_matching_tails(heads, tails, threshold):
-    """
-    遍历所有头部，找到每个头部对应的尾部（如果它们之间的距离小于等于给定的阈值）。
-    :param heads: 所有头部的数据（longest_lines_info）。
-    :param tails: 所有尾部的数据（all_endpoints）。
-    :param threshold: 距离阈值。
-    :return: 包含匹配尾部索引的字典，键是头部的层号，值是对应的尾部层号列表。
-    """
+   
     selected_tails_for_heads = {}
     for head in heads:
         head_layer = head['layer']
@@ -2879,13 +2855,13 @@ def find_matching_tails(heads, tails, threshold):
                 for tail_endpoint in tail['endpoints']:
                     if distance(head_endpoint, tail_endpoint) <= threshold:
                         selected_tails.append(tail_layer)
-                        break  # 如果找到一个符合条件的尾部端点，跳出内循环
+                        break 
                 if tail_layer in selected_tails:
-                    break  # 如果已选择这个尾部，跳出外循环
-        selected_tails_for_heads[head_layer] = list(set(selected_tails))  # 去除重复的尾部序号
+                    break  
+        selected_tails_for_heads[head_layer] = list(set(selected_tails))  
     return selected_tails_for_heads
 
-selected_tails = find_matching_tails(longest_lines_info, all_endpoints, 27)#不能再大于27
+selected_tails = find_matching_tails(longest_lines_info, all_endpoints, 27)
 
 
 
@@ -2930,27 +2906,27 @@ def closest_points(head, tail):
 
 # Function to calculate the distance between two points
 def distance(p1, p2):
-    # 定义一个函数来计算两点之间的距离
+
     return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
-    # 返回两点之间的欧几里得距离
+
 
 
 # Function to calculate the angle between two vectors
 def angle_difference(closest_tail_point, h_point, tail_layer, angles_with_20_points):
-    # 计算closest_tail_point到h_point的角度
+
     angle_to_h_point = math.degrees(math.atan2(h_point[1] - closest_tail_point[1], h_point[0] - closest_tail_point[0]))
 
-    # 确保角度为非负数
+
     if angle_to_h_point < 0:
         angle_to_h_point += 360
 
-    # 获取angles_with_20_points中对应尾部点的角度
+
     angle_in_data = next(item for item in angles_with_20_points if item['layer'] == tail_layer)['angles'][0]
 
-    # 计算两个角度之间的差值
+
     angle_diff = abs(angle_to_h_point - angle_in_data)
 
-    # 确保角度差在0到180度之间
+
     if angle_diff > 180:
         angle_diff = 360 - angle_diff
 
@@ -2959,28 +2935,26 @@ def angle_difference(closest_tail_point, h_point, tail_layer, angles_with_20_poi
 
 # Function to find the closest point pair between head and tail
 def closest_points(head, tail):
-    # 定义一个函数来找出头部和尾部之间最接近的点对
+
     """
     Find the closest points between a head and a tail.
     Return the points as (head_point, tail_point).
     """
-    min_dist = float('inf')  # 初始化最小距离为无穷大
-    closest_pair = None  # 初始化最接近的点对为空
-    for h_point in head:  # 遍历头部的每个点
-        for t_point in tail:  # 遍历尾部的每个点
-            dist = distance(h_point, t_point)  # 计算头部和尾部点之间的距离
-            if dist < min_dist:  # 如果找到了更近的距离
-                min_dist = dist  # 更新最小距离
-                closest_pair = (h_point, t_point)  # 更新最接近的点对
-    return closest_pair  # 返回最接近的点对
+    min_dist = float('inf') 
+    closest_pair = None 
+    for h_point in head:  
+        for t_point in tail:  
+            dist = distance(h_point, t_point)  
+            if dist < min_dist: 
+                min_dist = dist  
+                closest_pair = (h_point, t_point)  
+    return closest_pair  
 
 
 # Convert the data into a more usable format
 heads = {item['layer']: item['endpoints'] for item in longest_lines_info}
-# 将longest_lines_info中的数据转换为一个字典，键是层，值是端点
 
 tails = {item['layer']: item['endpoints'] for item in all_endpoints}
-# 将all_endpoints中的数据转换为一个字典，键是层，值是端点
 
 # Process each head
 final_selection3 = {}
@@ -3005,7 +2979,7 @@ for head_layer, tail_layers in selected_tails.items():
                     selected_tail = tail_layer
 
     # Check if the minimum angle difference exceeds 100 degrees
-    if min_angle_diff > 40:  # 可修改的角度阈值(不可大于62)
+    if min_angle_diff > 40: 
         final_selection3[head_layer] = None
     else:
         final_selection3[head_layer] = selected_tail
@@ -3074,45 +3048,44 @@ while True:
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 读取头部掩码文件
+
 head_masks_path = 'filtered_masks.npy'
 head_masks = np.load(head_masks_path)
 
-# 读取尾部掩码文件
+
 sperm_tail_path = 'Sperm_tail.npy'
 sperm_tail = np.load(sperm_tail_path, allow_pickle=True)
 segmentations = [segment['segmentation'] for segment in sperm_tail]
 
-# 过滤掉 None 值
+
 
 final_selection_filtered = {k: v for k, v in final_selection3.items() if v is not None}
 
 
 
-# 创建一个字典来存储所有组合掩码
+
 
 combined_masks = {}
 
 
 
 
-# 初始化两个数组来分别存储头部和尾部的原始掩码
+
 original_head_masks = []
 original_tail_masks = []
 
-# 遍历 final_selection_filtered 字典
+
 for i, (head_layer, tail_layer) in enumerate(final_selection_filtered.items()):
     head_mask = head_masks[head_layer]
     tail_mask = segmentations[tail_layer]
 
-    # 将原始的头部和尾部掩码添加到相应的数组中
     original_head_masks.append(head_mask)
     original_tail_masks.append(tail_mask)
 
-    # 重叠掩码
+
     combined_mask = np.maximum(head_mask, tail_mask)
 
-    # 将组合掩码存储在字典中
+
     combined_masks[f'Head_{head_layer}_Tail_{tail_layer}'] = combined_mask
 
 
@@ -3123,7 +3096,7 @@ for i, (head_layer, tail_layer) in enumerate(final_selection_filtered.items()):
 
 
 
-# 保存包含所有组合掩码的字典
+
 np.save('combined_masks.npy', combined_masks)
 
 np.save('original_head_masks.npy', original_head_masks)
@@ -3293,15 +3266,14 @@ np.save("combined_masks.npy",Last)
 # Function to convert mask to polygon points
 # Function to convert mask to polygon points without approximation
 def mask_to_polygon_points(mask):
-    # 确保掩码是8位单通道二进制图像
-    # 如果掩码已经是二值图像但数据类型不是uint8，则直接转换数据类型
+
     mask = mask.astype(np.uint8)
     
-    # 查找掩码上的轮廓
+
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     polygons = []
     for contour in contours:
-        # 将轮廓转换为不进行近似的点列表
+
         polygon = contour.reshape(-1, 2).tolist()
         polygons.append(polygon)
 
@@ -3371,16 +3343,16 @@ with open(json_output_path, 'w') as json_file:
 
 
 
-# 定义文件路径
+
 json_file_path = f'data/original_images/{I}.json'
 
-# 读取JSON文件
+
 with open(json_file_path, 'r') as file:
     data = json.load(file)
 
-# 过滤掉points小于10的多边形
+
 data['shapes'] = [shape for shape in data['shapes'] if len(shape['points']) >= 10]
 
-# 将修改后的数据写回文件
+
 with open(json_file_path, 'w') as file:
     json.dump(data, file, indent=4)
