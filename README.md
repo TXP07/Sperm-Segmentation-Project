@@ -19,6 +19,11 @@ Sperm-Segmentation-Project/
 
 ```
 ## Methodology:<br>
+
+<div align="center">
+    <img src="Example Result/methods2.pdf" alt="drawing" width="500"/>
+</div>
+
 ## Data Organization:<br>
 Our data contains about 4 sperm pictures, and the resolution of each picture is 720*540. <br>
 Each image contains several intact sperm, and they often overlap.<br>
