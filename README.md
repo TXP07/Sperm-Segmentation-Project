@@ -35,7 +35,7 @@ To structure your data for training and testing, it is recommended to organize y
             - 001.jpg
             - ...
             - N.jpg
-        - Preprocessing_images      # Preprocessing images
+        - Preprocessing_images      # Preprocessed images
 ```
 Here's how the data is organized:<br>
 
