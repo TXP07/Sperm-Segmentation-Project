@@ -51,7 +51,7 @@ We provide several samples for testing.  The resolution of the image specificati
 Follow these steps to set up and start working with the project:<br>
 
 1. **Environment Setup**: Create a virtual environment and install the required dependencies. Step omitted here.<br>
-2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended. Download SAM model and the weight file from this place. After downloading and unpacking:<br>
+2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended. Download SAM model and the weight file from [this place](https://github.com/facebookresearch/segment-anything). After downloading and unpacking:<br>
 
 Install Segment Anything:
 
