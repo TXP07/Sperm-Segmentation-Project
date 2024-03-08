@@ -23,7 +23,7 @@ from scipy.ndimage import convolve, distance_transform_edt
 from skimage import io, color, filters, morphology
 import json
 import torch
-from skimage import color, filters, morphology
+
 
 
 sys.path.append("segment-anything-main")
