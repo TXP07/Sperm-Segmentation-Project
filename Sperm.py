@@ -47,7 +47,7 @@ def show_anns(anns):
             img[:, :, i] = color_mask[i]
         ax.imshow(np.dstack((img, m * 0.35)))
 
-#设置图像名称，图像类别为png，位于根目录下image文件夹下
+
 I = "3392"
 
 def set_I(new_value):
@@ -91,7 +91,7 @@ resize_image(input_path, output_path, width, height)
 from PIL import Image
 import numpy as np
 
-# 定义目标明度
+
 target_brightness = 220
 
 # Function to adjust the brightness of an image
@@ -118,7 +118,7 @@ def adjust_brightness(image_path, target_brightness):
         adjusted_hsv_image = Image.merge('HSV', (h, s, Image.fromarray(v_array)))
         return adjusted_hsv_image.convert('RGB')
 
-# 单一文件路径
+
 image_path = 'data/original_images/new.jpg' # 请替换为你的图片文件路径
 # Adjust the brightness of the single image
 adjusted_image = adjust_brightness(image_path, target_brightness)
