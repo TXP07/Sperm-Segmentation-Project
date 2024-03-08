@@ -46,7 +46,7 @@ Example of how images and masks looked like in my dataset:<br>
 Follow these steps to set up and start working with the project:<br>
 
 1. **Environment Setup**: Create a virtual environment and install the required dependencies.Steps omitted here.<br>
-2. **SAM model Setup**:The code requires `python>=3.8`, as well as `pytorch>=1.7` and `torchvision>=0.8`. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.<br>
+2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.And download the SAM model and the weight file from this place.After you download and unpack it:<br>
 
 Install Segment Anything:
 
