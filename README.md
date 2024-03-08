@@ -44,14 +44,14 @@ Here's how the data is organized:<br>
 
 
 
-You can add data to it yourself, and the resolution of the image specification is 720*540. Or you can directly use the sample data we provide.<br>
-Example of how images and masks looked like in my dataset:<br>
+We provide several samples for test.  The resolution of the image specification is 720*540. .<br>
+
 
 ## Getting Started<br>
 Follow these steps to set up and start working with the project:<br>
 
-1. **Environment Setup**: Create a virtual environment and install the required dependencies.Steps omitted here.<br>
-2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.And download the SAM model and the weight file from this place.After you download and unpack it:<br>
+1. **Environment Setup**: Create a virtual environment and install the required dependencies. Steps omitted here.<br>
+2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended. Download the SAM model and the weight file from this place. After you download and unpack it:<br>
 
 Install Segment Anything:
 
@@ -64,8 +64,8 @@ cd segment-anything-main; pip install -e .
 ```
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
-Please download the SAM model and the weight file to the path in the folder segment-anything-main.If it is not achieved，you must modify the pathas following.<br>
-4. **Check the path of sam**:Replace the paths of the SAM model and weight file in the code with the path you actually installed.<br>
+Please download the SAM model and the weight file to the path in the folder segment-anything-main. If it is not achieved，please modify the pathas following.<br>
+4. **Check the path of sam**:Replace the paths of the SAM model and weight file in the code with the path you actually installed to.<br>
 <div align="center">
     <img src="Example Result/code.png" alt="drawing" width="500"/>
 </div>
@@ -80,7 +80,7 @@ python Sperm.py
 ```
 
 ## Example Result:<br>
-After you run the code,you will obtain the json file of the segmentation result.Here are examples of what our visualization looks like.<br>
+After you run the code, you will obtain the json file of the segmentation result. Here are examples of what our visualization looks like.<br>
 <div align="center">
     <img src="Example Result/1191.jpg" alt="drawing" width="300"/>
     <img src="Example Result/0850.jpg" alt="drawing" width="300"/>
