@@ -26,7 +26,7 @@ Sperm-Segmentation-Project/
 
 ## Data Organization:<br>
 Our data contains about 4 sperm pictures, and the resolution of each picture is 720*540. <br>
-Each image contains several intact sperm, and they often overlap.<br>
+Each image contains several intact sperms, and they often overlap.<br>
 To structure the data for training and testing, it is recommended to organize dataset as follows:<br>
 ```
 - data/                 # Directory for storing your dataset
@@ -44,14 +44,14 @@ Here's how the data is organized:<br>
 
 
 
-We provide several samples for test.  The resolution of the image specification is 720*540. .<br>
+We provide several samples for testing.  The resolution of the image specification is 720*540. .<br>
 
 
 ## Getting Started<br>
 Follow these steps to set up and start working with the project:<br>
 
-1. **Environment Setup**: Create a virtual environment and install the required dependencies. Steps omitted here.<br>
-2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended. Download the SAM model and the weight file from this place. After downloading and unpacking:<br>
+1. **Environment Setup**: Create a virtual environment and install the required dependencies. Step omitted here.<br>
+2. **SAM model Setup**:The code requires SAM model and its weight file. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended. Download SAM model and the weight file from this place. After downloading and unpacking:<br>
 
 Install Segment Anything:
 
