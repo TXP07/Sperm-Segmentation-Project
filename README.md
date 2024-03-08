@@ -72,7 +72,7 @@ Please download SAM model and the weight file to the path in the folder segment-
 
 5. **Run the code**： Enter the directory ：<br>
 ```
-cd Sperm-Segmentation-Project
+cd Sperm-Segmentation-Project-main
 ```
 Run the program by command :<br>
 ```
