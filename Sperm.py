@@ -58,11 +58,6 @@ def set_I(new_value):
 Sperm_tail=[]
 
 
-
-
-
-
-
 def resize_image(input_path, output_path, width, height):
     # Check if the input file exists
     if os.path.exists(input_path):
@@ -86,10 +81,6 @@ height = 1080
 
 # Call the resizing function
 resize_image(input_path, output_path, width, height)
-
-
-
-
 
 
 target_brightness = 220
@@ -127,10 +118,6 @@ adjusted_image = adjust_brightness(image_path, target_brightness)
 new_path='data/original_images/new1.jpg'
 adjusted_image.save(new_path) 
 #print("Brightness adjustment completed for the image.")
-
-
-
-
 
 
 # Target RGB values
@@ -171,12 +158,6 @@ new_path = 'data/original_images/new2.jpg'
 # You can choose to save it with the same name (overwriting) or with a new name
 adjusted_image.save(new_path) 
 #print("RGB channel adjustment completed for the image.")
-
-
-
-
-
-
 
 def dehaze_image(img, clip_limit=150, tile_size=(2, 2)):
     lab = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
@@ -235,21 +216,6 @@ news_path = f'data/Preprocessing_images/new2.jpg'
 process_single_image(image_path,news_path)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def resize_image(input_path, output_path, width, height):
     # Check if the input file exists
     if os.path.exists(input_path):
@@ -275,44 +241,8 @@ height = 540        # New height for the image
 resize_image(input_path, output_path, width, height)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 image = cv2.imread(f'data/Preprocessing_images/{I}.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 sam_checkpoint = "segment-anything-main/sam_vit_h_4b8939.pth"
 model_type = "default"
@@ -322,21 +252,11 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to(device=device)
 
 
-
-
-
-
-
 mask_generator = SamAutomaticMaskGenerator(sam)
 masks = mask_generator.generate(image)
 masks = np.array([mask for mask in masks if mask['area'] <= 100000])
 #masks = np.delete(masks, 0)
 np.save('masks2.npy', masks)
-
-
-
-
-
 
 
 # Load the numpy array with allow_pickle enabled
@@ -391,15 +311,6 @@ for index, segmentation_mask in enumerate(segmentation_masks):
 # Save the valid masks to a new .npy file
 np.save('valid_masks.npy', np.array(valid_masks))
 
-
-
-
-
-
-
-
-
-
 image_path = f'data/Preprocessing_images/{I}.jpg'
 image = Image.open(image_path)
 
@@ -410,12 +321,6 @@ masks = np.load(masks_path)
 
 image_info = (image.size, image.mode)
 masks_info = masks.shape
-
-
-
-
-
-
 
 
 image_np = np.array(image)
@@ -429,14 +334,6 @@ for mask in masks:
 modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image.jpg"
 modified_image.save("modified_image.jpg")
-
-
-
-
-
-
-
-
 
 
 image_sk = io.imread("modified_image.jpg")
@@ -461,14 +358,8 @@ whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
 
-
-
-
 processed_img_path = "modified_image_dilated.jpg"
 cv2.imwrite(processed_img_path, image_sk)
-
-
-
 
 T=True
 XX=0
@@ -482,8 +373,6 @@ while T!=False:
     masks = mask_generator.generate(image)
     masks = np.array([mask for mask in masks if mask['area'] <= 100000])
     np.save('masks2.npy', masks)
-
-
 
     # Load the numpy array with allow_pickle enabled
     masks = np.load('masks2.npy', allow_pickle=True)
@@ -507,9 +396,7 @@ while T!=False:
 
     # Placeholder for indices that meet the new criteria with at least 800 purple pixels and 400 green pixels
     valid_mask_indices_updated_800_400 = []
-
-
-   
+    
     # Loop through each segmentation mask with the updated pixel criteria
     for index, segmentation_mask in enumerate(segmentation_masks):
         # Apply the segmentation mask to the HSV image
@@ -537,9 +424,6 @@ while T!=False:
         break
     XX=len(valid_masks)
 
-
-
-    
     image_path = 'modified_image_dilated.jpg'
     image = Image.open(image_path)
 
@@ -555,45 +439,25 @@ while T!=False:
        
         image_np[mask == True] = [255, 255, 255]
 
-    
     modified_image = Image.fromarray(image_np)   
     processed_img_path = "modified_image.jpg"
        
-   
     modified_image.save("modified_image.jpg")
    
-   
     #modified_image
-
-
-
 
     image_sk = io.imread("modified_image.jpg")
 
 
     gray_sk = color.rgb2gray(image_sk)
 
-
     threshold_value = filters.threshold_otsu(gray_sk)
     binary = gray_sk < threshold_value
-
-
     cleaned = morphology.remove_small_objects(binary, min_size=50)
-
-
     mask = np.where(cleaned == 0, 1, 0).astype(bool)
-
-
     image_sk[mask] = [255, 255, 255]
-
-
     whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
     image_sk[whitening_mask_sk] = [255, 255, 255]
-
-
-
-
-
     processed_img_path = "modified_image_dilated.jpg"
     cv2.imwrite(processed_img_path, image_sk)
     
@@ -634,10 +498,6 @@ for current_mask in masks1:
     
     min_row, max_row = np.min(rows), np.max(rows)
     min_col, max_col = np.min(cols), np.max(cols)
-    
-    
-
-    
     region_mask = mask[min_row:max_row+1, min_col:max_col+1]
     region_current_mask = current_mask[min_row:max_row+1, min_col:max_col+1]
     
@@ -691,19 +551,8 @@ masks_filtered = masks[furthest_distances_array <= 75]
 
 # Save the filtered masks back to the original file
 np.save(file_path, masks_filtered)
-
-
-
-
-
-
 file_path = 'filtered_masks.npy'  
 masks = np.load(file_path)
-
-
-
-
-
 image_path = 'modified_image.jpg'
 image = Image.open(image_path)
 
@@ -711,59 +560,33 @@ image = Image.open(image_path)
 masks_path = 'filtered_masks.npy'
 masks = np.load(masks_path)
 
-
 image_info = (image.size, image.mode)
 masks_info = masks.shape
-
-
-
 image_np = np.array(image)
-
 
 for mask in masks:
     
     image_np[mask == 1] = [255, 255, 255]
 
-
 modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image.jpg"
 modified_image.save("modified_image.jpg")
 
-
-
-
-
-
-
 image_sk = io.imread("modified_image.jpg")
 
-
 gray_sk = color.rgb2gray(image_sk)
-
 
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-
 cleaned = morphology.remove_small_objects(binary, min_size=50)
-
 
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-
 image_sk[mask] = [255, 255, 255]
-
 
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
-
-
-
-
-
-#
-
-
 
 processed_img_path = "modified_image_dilated.jpg"
 cv2.imwrite(processed_img_path, image_sk)
@@ -771,15 +594,11 @@ cv2.imwrite(processed_img_path, image_sk)
 image22 = cv2.imread(r"modified_image_dilated.jpg")
 image22 = cv2.cvtColor(image22, cv2.COLOR_BGR2RGB)
 
-
 mask_generator22 = SamAutomaticMaskGenerator(sam)
 masks22 = mask_generator22.generate(image22)
 masks22 = np.array([mask for mask in masks22 if mask['area'] <= 100000])
 #masks22 = np.delete(masks22, 0)
 np.save("masks22.npy",masks22)
-
-
-
 
 masks1 = [np.array(seg['segmentation'], dtype=np.uint8) for seg in masks22]
 
@@ -804,9 +623,6 @@ for current_mask in masks1:
 
     min_row, max_row = np.min(rows), np.max(rows)
     min_col, max_col = np.min(cols), np.max(cols)
-
-    # ... (rest of your code)
-
     region_mask = mask[min_row:max_row + 1, min_col:max_col + 1]
     region_current_mask = current_mask[min_row:max_row + 1, min_col:max_col + 1]
 
@@ -850,52 +666,31 @@ modified_image = Image.fromarray(image_np)
 processed_img_path = "modified_image_dilated.jpg"
 modified_image.save("modified_image_dilated.jpg")
 
-
-
 image_sk = io.imread("modified_image_dilated.jpg")
 
-
 gray_sk = color.rgb2gray(image_sk)
-
-
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
-
-
 cleaned = morphology.remove_small_objects(binary, min_size=50)
-
 
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-
 image_sk[mask] = [255, 255, 255]
-
 
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
-
-
-
-
 processed_img_path = "modified_image_dilated.jpg"
 cv2.imwrite(processed_img_path, image_sk)
 
-
-
-
-
-
 image22 = cv2.imread(r"modified_image_dilated.jpg")
 image22 = cv2.cvtColor(image22, cv2.COLOR_BGR2RGB)
-
 
 mask_generator22 = SamAutomaticMaskGenerator(sam)
 masks22 = mask_generator22.generate(image22)
 masks22 = np.array([mask for mask in masks22 if mask['area'] <= 100000])
 #masks22 = np.delete(masks22, 0)
 np.save("masks22.npy",masks22)
-
 
 def calculate_furthest_distance(mask):
     # Find the coordinates of all pixels that belong to the mask
@@ -946,16 +741,9 @@ for index, binary_mask in enumerate(binary_masks):
 
 masks22_path = 'masks22.npy'
 masks22 = np.load(masks22_path, allow_pickle=True)
-
-
 image_path = r"modified_image_dilated.jpg"
 image = Image.open(image_path)
-
-
 image_np = np.array(image)
-
-
-
 for idx in valid_mask_indices:
     
     mask = masks22[idx]['segmentation']
@@ -969,53 +757,24 @@ modified_image = Image.fromarray(image_np)
 save_path = 'new_modified_image.jpg'
 modified_image.save(save_path)
 
-
-
 image_sk = io.imread('new_modified_image.jpg')
-
-
 gray_sk = color.rgb2gray(image_sk)
-
-
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
-
-
 cleaned = morphology.remove_small_objects(binary, min_size=50)
-
-
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
-
 image_sk[mask] = [255, 255, 255]
-
 
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
-
-
-
-
 processed_img_path = 'processed_image.jpg'
 cv2.imwrite(processed_img_path, image_sk)
 
-
 masks22 = np.delete(masks22, valid_mask_indices)
 
-
 np.save("masks22.npy",masks22)
-
-
-
-
-
-
-
-
-
-
-
 
 # Load the numpy file
 mask_file = 'masks22.npy'  # Replace with your file path
@@ -1050,9 +809,6 @@ for i, num_components in enumerate(connected_components):
 np.save(mask_file, masks)
 masks_path = "masks22.npy"
 masks = np.load(masks_path, allow_pickle=True)
-
-
-
 
 def extract_and_skeletonize(data):
     skeletons = []
@@ -1166,9 +922,6 @@ output_file = 'skeletonized_segmentations.npy'  # Replace with your desired save
 np.save(output_file, skeletonized_segmentations)
 
 
-
-
-
 # Function to analyze the connectivity of the skeletons in all masks
 def analyze_masks_connectivity(masks_file):
     masks = masks_file
@@ -1203,9 +956,6 @@ def analyze_masks_connectivity(masks_file):
 # Analyze the connectivity of the skeletons in all masks
 disconnected_masks_indices, connectcomponents = analyze_masks_connectivity(masks)
 
-
-
-
 # Function to analyze the connectivity of the skeletons in all masks
 def analyze_skeleton_connectivity(masks):
     disconnected_masks_indices = []
@@ -1223,9 +973,6 @@ def analyze_skeleton_connectivity(masks):
             disconnected_masks_indices.append(index)
 
     return disconnected_masks_indices
-
-
-
 
 # Function to detect endpoints in a skeleton
 def detect_endpoints(skeleton):
@@ -1296,11 +1043,6 @@ def identify_valid_endpoints_masks(masks, min_distance=25):
 
 # Identify masks with more than two valid endpoints based on the distance criteria
 valid_endpoints_masks_indices = identify_valid_endpoints_masks(skeletonized_segmentations)
-
-
-
-
-
 
 def find_point_on_skeleton(skeleton, start, distance):
     current_point = start
@@ -1432,9 +1174,6 @@ masks = np.load('masks22.npy', allow_pickle=True)
 
 new_image = copy.deepcopy(image)
 
-
-
-
 masks_length = len(masks)  
 new_list = list(range(masks_length))  
 
@@ -1445,24 +1184,6 @@ final2 = list(set(new_list) - set(final))
 for index in final2:
     mask = masks[index]['segmentation']
     new_image[mask == 1] = 255  
-
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
 
 from skimage.measure import label, regionprops
 from skimage.morphology import skeletonize
@@ -1498,8 +1219,6 @@ def draw_filled_rectangle(mask, point_1, point_2, ratio):
 masks_file = 'masks22.npy'  # Update this path
 masks = np.load(masks_file, allow_pickle=True)
 
-
-
 for index in final2:
     if connectcomponents[index] == 2:
         mask = masks[index]['segmentation']
@@ -1527,22 +1246,6 @@ np.save(masks_file, masks)
 masks_file = 'masks22.npy'  # Update this path
 masks = np.load(masks_file, allow_pickle=True)    
     
-        
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
 for index in final2:
     Sperm_tail.append(masks[index])
 
@@ -1550,37 +1253,24 @@ for index in final2:
 new_image_path = 'final111.jpg'  
 io.imsave(new_image_path, new_image)
 
-
 image_sk = io.imread('final111.jpg')
 
-
 gray_sk = color.rgb2gray(image_sk)
-
 
 threshold_value = filters.threshold_otsu(gray_sk)
 binary = gray_sk < threshold_value
 
-
 cleaned = morphology.remove_small_objects(binary, min_size=50)
-
 
 mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
 image_sk[mask] = [255, 255, 255]
 
-
 whitening_mask_sk = np.all(image_sk > [200, 200, 200], axis=-1)
 image_sk[whitening_mask_sk] = [255, 255, 255]
 
-
-
-
-
 processed_img_path = 'modified_image_dilated0.jpg'
 cv2.imwrite(processed_img_path, image_sk)
-
-
-
 
 prev_count = -1
 current_count = 0
@@ -1653,10 +1343,6 @@ while True:
     save_path = 'new_modified_image.jpg'
     modified_image.save(save_path)
    
-
-
-
-
     image_sk = io.imread('new_modified_image.jpg')
 
 
@@ -1695,9 +1381,6 @@ while True:
         X=X-1
         break
     # Check the structure and type of the first item
-
-
-
 
     # Load the numpy file
     mask_file = 'masks22.npy'  # Replace with your file path
@@ -1757,9 +1440,6 @@ while True:
             masks_with_high_curvature_points.append(index)
         sharp_points_all_layers.append({'layer': index, 'sharp_points': sharp_points})
 
-
-
-
     final_set = set(masks_with_high_curvature_points) | set(valid_endpoints_masks_indices) | set(disconnected_masks_indices)
     final = list(final_set)
 
@@ -1776,9 +1456,6 @@ while True:
 
     final2 = list(set(new_list) - set(final))
 
-
-
-
     for index in final2:
         mask = masks[index]['segmentation']
         new_image[mask == 1] = 255  
@@ -1789,8 +1466,6 @@ while True:
     new_image_path = 'final111.jpg'  
     io.imsave(new_image_path, new_image)
 
-
-
     img_path = 'final111.jpg'
 
 
@@ -1798,14 +1473,11 @@ while True:
 
 
     gray_sk = color.rgb2gray(image_sk)
-
-
     threshold_value = filters.threshold_otsu(gray_sk)
     binary = gray_sk < threshold_value
 
  
     cleaned = morphology.remove_small_objects(binary, min_size=20)
-
 
     mask = np.where(cleaned == 0, 1, 0).astype(bool)
 
@@ -1819,10 +1491,6 @@ while True:
 
     processed_img_path = f"modified_image_dilated{X + 1}.jpg"
     cv2.imwrite(processed_img_path, image_sk)
-
-
-
-
 
     current_count = len(Sperm_tail)
 
@@ -1883,9 +1551,6 @@ masks_path = 'masks22.npy'
 # image_path = f'modified_image_dilated{X}.jpg'
 image_path = f'data/original_images/{I}.jpg'
 extracted_images = extract_segments_from_image(masks_path, image_path)
-
-
-
 
 
 # Load the image from the saved path after previous processing
@@ -1980,8 +1645,6 @@ for idx, img in enumerate(extracted_images_on_canvas, start=len(extracted_images
     
     save_path = f'extracted_image{idx}_0.jpg'  # Replace with your save path
     Image.fromarray(img).save(save_path)
-
-
 
 
 def extract_components_and_update_masks(image_array, masks_path, min_pixel_size=100):
@@ -2798,19 +2461,9 @@ def calculate_angle(points):
 
     first_point = points_array[0]
     projected_point2 = line_origin + np.dot((first_point - line_origin), line_direction) * line_direction
-
-
     direction_to_start = projected_point2 - projected_point
-
-
     angle = math.atan2(direction_to_start[0], direction_to_start[1]) * 180 / math.pi
-
-
     return angle if angle >= 0 else angle + 360
-
-
-
-
 
 # Assuming `skeletonized_segments` contains your skeletonized data and `all_endpoints` is your list of endpoints
 angles_with_20_points = []
@@ -2825,8 +2478,6 @@ for layer_info in all_endpoints:
         angle = calculate_angle(points)
         angles.append(angle)
     angles_with_20_points.append({'layer': layer, 'angles': angles})
-
-
 
 
 def distance(point1, point2):
@@ -2851,10 +2502,6 @@ def find_matching_tails(heads, tails, threshold):
     return selected_tails_for_heads
 
 selected_tails = find_matching_tails(longest_lines_info, all_endpoints, 27)
-
-
-
-
 
 
 
@@ -2891,13 +2538,10 @@ def closest_points(head, tail):
     return closest_pair
 
 
-
-
 # Function to calculate the distance between two points
 def distance(p1, p2):
 
     return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
-
 
 
 # Function to calculate the angle between two vectors
@@ -2908,17 +2552,10 @@ def angle_difference(closest_tail_point, h_point, tail_layer, angles_with_20_poi
 
     if angle_to_h_point < 0:
         angle_to_h_point += 360
-
-
     angle_in_data = next(item for item in angles_with_20_points if item['layer'] == tail_layer)['angles'][0]
-
-
     angle_diff = abs(angle_to_h_point - angle_in_data)
-
-
     if angle_diff > 180:
         angle_diff = 360 - angle_diff
-
     return angle_diff
 
 
@@ -2949,8 +2586,6 @@ tails = {item['layer']: item['endpoints'] for item in all_endpoints}
 final_selection3 = {}
 
 
-
-
 for head_layer, tail_layers in selected_tails.items():
     head = heads[head_layer]
     min_angle_diff = float('inf')
@@ -2977,19 +2612,6 @@ for head_layer, tail_layers in selected_tails.items():
 for head_layer in heads:
     if head_layer not in final_selection3:
         final_selection3[head_layer] = None
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 while True:
@@ -3040,16 +2662,7 @@ segmentations = [segment['segmentation'] for segment in sperm_tail]
 
 final_selection_filtered = {k: v for k, v in final_selection3.items() if v is not None}
 
-
-
-
-
 combined_masks = {}
-
-
-
-
-
 original_head_masks = []
 original_tail_masks = []
 
@@ -3067,30 +2680,10 @@ for i, (head_layer, tail_layer) in enumerate(final_selection_filtered.items()):
 
     combined_masks[f'Head_{head_layer}_Tail_{tail_layer}'] = combined_mask
 
-
-
-
-
-
-
-
-
-
 np.save('combined_masks.npy', combined_masks)
 
 np.save('original_head_masks.npy', original_head_masks)
 np.save('original_tail_masks.npy', original_tail_masks)
-
-
-
-
-
-
-
-
-
-
-
 
 from skimage.draw import polygon
 from scipy.spatial import distance
@@ -3171,15 +2764,6 @@ updated_content = update_masks_with_rectangles(content)
 updated_file_path = 'combined_masks.npy'
 np.save(updated_file_path, updated_content)
 
-
-
-
-
-
-
-
-
-
 # Load the numpy array
 data = np.load('combined_masks.npy', allow_pickle=True)
 
@@ -3203,13 +2787,6 @@ new_array = np.array(all_values, dtype=object)
 
 # new_array now contains all the values extracted from the dictionaries
 
-
-
-
-
-
-
-
 # Load the numpy array
 valid_masks_path = 'valid_masks.npy'
 valid_masks = np.load(valid_masks_path, allow_pickle=True)
@@ -3223,23 +2800,10 @@ valid_masks_converted = np.array(valid_masks).astype(int)
 
 # Now `valid_masks_converted` contains the converted values
 
-
-
-
 Last=list(valid_masks_converted)+list(new_array)
 
 
 np.save("combined_masks.npy",Last)
-
-
-
-
-
-
-
-
-
-
 
 
 # Function to convert mask to polygon points
@@ -3263,20 +2827,10 @@ def mask_to_polygon_points(mask):
 npy_file_path = 'combined_masks.npy'
 
 
-
-
-
-
-
-
 masks = np.load(npy_file_path, allow_pickle=True)
 
 
 #mask_content = masks.item()
-
-
-
-
 
 # Define the basic structure of the JSON output
 json_output = {
@@ -3289,18 +2843,6 @@ json_output = {
     "imageWidth": 720,
     "text": ""
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 for index, mask in enumerate(masks):
@@ -3335,3 +2877,6 @@ data['shapes'] = [shape for shape in data['shapes'] if len(shape['points']) >= 1
 
 with open(json_file_path, 'w') as file:
     json.dump(data, file, indent=4)
+
+
+print("Successfully running, please go to data/original_images to find your JSON file with the same name.")
