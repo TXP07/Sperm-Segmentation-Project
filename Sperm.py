@@ -23,6 +23,7 @@ from scipy.ndimage import convolve, distance_transform_edt
 from skimage import io, color, filters, morphology
 import json
 import torch
+from skimage import color, filters, morphology
 
 
 sys.path.append("segment-anything-main")
@@ -59,8 +60,8 @@ Sperm_tail=[]
 
 
 
-from PIL import Image
-import os
+
+
 
 def resize_image(input_path, output_path, width, height):
     # Check if the input file exists
@@ -88,8 +89,7 @@ resize_image(input_path, output_path, width, height)
 
 
 
-from PIL import Image
-import numpy as np
+
 
 
 target_brightness = 220
@@ -131,8 +131,7 @@ adjusted_image.save(new_path)
 
 
 
-from PIL import Image
-import numpy as np
+
 
 # Target RGB values
 target_r = 216.5
@@ -176,9 +175,7 @@ adjusted_image.save(new_path)
 
 
 
-import cv2
-import numpy as np
-from skimage import color, filters, morphology
+
 
 
 def dehaze_image(img, clip_limit=150, tile_size=(2, 2)):
@@ -340,8 +337,7 @@ np.save('masks2.npy', masks)
 
 
 
-import numpy as np
-import cv2
+
 
 # Load the numpy array with allow_pickle enabled
 masks = np.load('masks2.npy', allow_pickle=True)
@@ -401,8 +397,7 @@ np.save('valid_masks.npy', np.array(valid_masks))
 
 
 
-from PIL import Image
-import numpy as np
+
 
 
 image_path = f'data/Preprocessing_images/{I}.jpg'
@@ -440,9 +435,8 @@ modified_image.save("modified_image.jpg")
 
 
 
-from skimage import morphology, color, filters, io
-import cv2
-import os
+
+
 
 
 image_sk = io.imread("modified_image.jpg")
@@ -489,8 +483,7 @@ while T!=False:
     masks = np.array([mask for mask in masks if mask['area'] <= 100000])
     np.save('masks2.npy', masks)
 
-    import numpy as np
-    import cv2
+
 
     # Load the numpy array with allow_pickle enabled
     masks = np.load('masks2.npy', allow_pickle=True)
@@ -543,8 +536,8 @@ while T!=False:
         T=False
         break
     XX=len(valid_masks)
-    from PIL import Image
-    import numpy as np
+
+
 
     
     image_path = 'modified_image_dilated.jpg'
@@ -571,9 +564,8 @@ while T!=False:
    
    
     #modified_image
-    from skimage import morphology, color, filters, io
-    import cv2
-    import os
+
+
 
 
     image_sk = io.imread("modified_image.jpg")
@@ -663,9 +655,9 @@ filtered_masks = np.array(filtered_masks)
 np.save('filtered_masks.npy', filtered_masks)
 
 
-import numpy as np
+
 from scipy.spatial.distance import pdist, squareform
-import matplotlib.pyplot as plt
+
 
 # Load the numpy file
 file_path = 'filtered_masks.npy'
@@ -702,16 +694,14 @@ np.save(file_path, masks_filtered)
 
 
 
-import numpy as np
-import matplotlib.pyplot as plt
+
 
 
 file_path = 'filtered_masks.npy'  
 masks = np.load(file_path)
 
 
-from PIL import Image
-import numpy as np
+
 
 
 image_path = 'modified_image.jpg'
@@ -741,9 +731,8 @@ modified_image.save("modified_image.jpg")
 
 
 
-from skimage import morphology, color, filters, io
-import cv2
-import os
+
+
 
 
 image_sk = io.imread("modified_image.jpg")
@@ -1474,7 +1463,7 @@ for index in final2:
     
 
 
-import numpy as np
+
 from skimage.measure import label, regionprops
 from skimage.morphology import skeletonize
 from scipy.spatial.distance import cdist
@@ -3039,16 +3028,6 @@ while True:
                 final_selection3[head] = alternative_tails[0] if alternative_tails else None
 
 
-                
-
-
-                
-                
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
 head_masks_path = 'filtered_masks.npy'
 head_masks = np.load(head_masks_path)
 
@@ -3199,7 +3178,7 @@ np.save(updated_file_path, updated_content)
 
 
 
-import numpy as np
+
 
 # Load the numpy array
 data = np.load('combined_masks.npy', allow_pickle=True)
@@ -3229,7 +3208,7 @@ new_array = np.array(all_values, dtype=object)
 
 
 
-import numpy as np
+
 
 # Load the numpy array
 valid_masks_path = 'valid_masks.npy'
