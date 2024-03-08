@@ -59,6 +59,7 @@ cd segment-anything; pip install -e .
 ```
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
+4. **Replace the path**:Replace the path of the SAM model and weight file in the code with the path you actually installed.<br>
 3. **Run the code**： Enter the directory：<br>
 ```
 cd Sperm-Segmentation-Project
