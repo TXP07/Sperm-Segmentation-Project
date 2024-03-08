@@ -82,7 +82,7 @@ python Sperm.py
 ## Example Result:<br>
 After you run the code,you will obtain the json file of the segmentation result.Here are examples of what our visualization looks like.<br>
 <div align="center">
-    <img src="Example Result/068.jpg" alt="drawing" width="300"/>
+    <img src="Example Result/1191.jpg" alt="drawing" width="300"/>
     <img src="Example Result/0850.jpg" alt="drawing" width="300"/>
 </div>
 
