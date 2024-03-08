@@ -10,7 +10,7 @@ Here is an overview of the project's directory structure:<br>
 Sperm-Segmentation-Project/
     - Sperm.py            # Main script for model training
     - segment-anything-main/       #SAM model
-        - sam_vit_b_01ec64.pth
+        - sam_vit_h_4b8939.pth
     - README.md             # This file
     - requirements.txt      # Lists the required Python packages
     - data/                 # Directory for storing your dataset
