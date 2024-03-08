@@ -51,7 +51,7 @@ Follow these steps to set up and start working with the project:<br>
 Install Segment Anything:
 
 ```
-cd segment-anything; pip install -e .
+cd segment-anything-main; pip install -e .
 ```
 
   The following optional dependencies are necessary for mask post-processing, saving masks in COCO format, the example notebooks, and exporting the model in ONNX format. `jupyter` is also required to run the example notebooks.
