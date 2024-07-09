@@ -8,7 +8,7 @@ To run the code, please make sure you have prepared your data following the same
 Here is an overview of the project's directory structure:<br>
 ```
 Sperm-Segmentation-Project/
-    - Sperm.py            # Main script for model training
+    - main.py            # Main script for model training
     - image_processing.py            # Some functions
     - mask_processing.py            # Some functions
     - skeleton_analysis.py            # Some functions
