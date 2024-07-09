@@ -9,6 +9,10 @@ Here is an overview of the project's directory structure:<br>
 ```
 Sperm-Segmentation-Project/
     - Sperm.py            # Main script for model training
+    - image_processing.py            # Some functions
+    - mask_processing.py            # Some functions
+    - skeleton_analysis.py            # Some functions
+    - utils.py            # Some functions
     - segment-anything-main/       #SAM model
         - sam_vit_h_4b8939.pth
     - README.md             # This file
